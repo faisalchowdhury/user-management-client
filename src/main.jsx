@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import MainLayout from "./Layout/MainLayout.jsx";
 import UserList from "./Component/UserList.jsx";
+import AddUser from "./Component/AddUser.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: UserList,
+      },
+      {
+        path: "add-user",
+        Component: AddUser,
       },
     ],
   },

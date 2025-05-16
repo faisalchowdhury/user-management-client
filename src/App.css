@@ -11,3 +11,15 @@ th,
 tr {
   border-bottom: 1px solid #ddd;
 }
+
+.input-field {
+  @apply border border-gray-400 rounded;
+}
+
+a.active {
+  color: brown;
+}
+fieldset {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}

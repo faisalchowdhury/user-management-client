@@ -1,15 +1,18 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router";
 
 const UserList = () => {
   return (
     <div>
       <div className="overflow-x-auto my-10">
         <div className="w-9/10 mx-auto">
-          <button className="btn btn-sm bg-purple-700 text-white">
+          <Link
+            to={"/add-user"}
+            className="btn btn-sm bg-purple-700 text-white">
             Add User
-          </button>
+          </Link>
         </div>
         <table className="table w-9/10 mx-auto my-5">
           {/* head */}
