@@ -1,10 +1,46 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
 const AddUser = () => {
+  const { createNewUser } = useContext(AuthContext);
+  const handleAddUser = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    // const email = form.email.value;
+    // const password = form.password.value;
+
+    const formData = new FormData(form);
+    const { email, password, ...restField } = Object.fromEntries(formData);
+
+    console.log(email, password, restField);
+
+    const userInformation = {
+      email,
+      ...restField,
+    };
+
+    createNewUser(email, password)
+      .then((res) => {
+        if (res.user) {
+          fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(userInformation),
+          })
+            .then((res) => res.json())
+            .then((data) => console.log(data));
+        }
+      })
+      .catch(console.dir);
+  };
   return (
     <div>
       <div className="w-4xl mx-auto space-y-5">
-        <form className="grid grid-cols-2 gap-3">
+        <form onSubmit={handleAddUser} className="grid grid-cols-2 gap-3">
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
             <legend className="fieldset-legend text-lg">Name</legend>
             <input

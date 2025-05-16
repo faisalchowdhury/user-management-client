@@ -1,9 +1,11 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 const UserList = () => {
+  const data = useLoaderData();
+  console.log(data);
   return (
     <div>
       <div className="overflow-x-auto my-10">
@@ -27,38 +29,42 @@ const UserList = () => {
           </thead>
           <tbody>
             {/* row  */}
-            <tr>
-              <th>1</th>
-              <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                      <img
-                        src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                        alt="Avatar Tailwind CSS Component"
-                      />
+            {data.map((user, id) => {
+              return (
+                <tr key={user._id}>
+                  <th>{id + 1}</th>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img
+                            src={user.photo_url}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{user.name}</div>
+                        <div className="text-sm opacity-50">{user.email}</div>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="font-bold">Hart Hagerty</div>
-                    <div className="text-sm opacity-50">United States</div>
-                  </div>
-                </div>
-              </td>
-              <td>Zemlak, Daniel and Leannon</td>
-              <td>26000$</td>
-              <th>
-                <div className="flex gap-2">
-                  <button className="btn border-none hover:bg-slate-200 rounded-md">
-                    {" "}
-                    <FaEdit color="purple" size={16} />
-                  </button>
-                  <button className="btn border-none hover:bg-slate-200 rounded-md">
-                    <MdDelete color="red" size={16} />
-                  </button>
-                </div>
-              </th>
-            </tr>
+                  </td>
+                  <td>{user.occupation}</td>
+                  <td>{user.salary}$</td>
+                  <th>
+                    <div className="flex gap-2">
+                      <button className="btn border-none hover:bg-slate-200 rounded-md">
+                        {" "}
+                        <FaEdit color="purple" size={16} />
+                      </button>
+                      <button className="btn border-none hover:bg-slate-200 rounded-md">
+                        <MdDelete color="red" size={16} />
+                      </button>
+                    </div>
+                  </th>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
