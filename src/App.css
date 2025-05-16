@@ -1,2 +1,13 @@
 @import "tailwindcss";
-@plugin 'daisyui';
+@plugin 'daisyui' {
+  themes: none;
+}
+
+table {
+  box-shadow: 0px 5px 16px 0px #ddd;
+  border-radius: 10px;
+}
+th,
+tr {
+  border-bottom: 1px solid #ddd;
+}
