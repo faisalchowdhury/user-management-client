@@ -8,6 +8,7 @@ import UserList from "./Component/UserList.jsx";
 import AddUser from "./Component/AddUser.jsx";
 import AuthProvider from "./Context/AuthProvider.jsx";
 import Login from "./Component/Login.jsx";
+import UpdateUser from "./Component/UpdateUser.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         Component: Login,
+      },
+      {
+        path: "update/:email",
+        Component: UpdateUser,
       },
     ],
   },

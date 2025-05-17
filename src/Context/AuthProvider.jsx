@@ -5,6 +5,7 @@ import {
   deleteUser,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../Firebase/firebase";
 
@@ -33,6 +34,7 @@ const AuthProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
+  ///////
 
   const userInfo = {
     createNewUser,

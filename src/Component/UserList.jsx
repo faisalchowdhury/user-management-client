@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import Swal from "sweetalert2";
 
@@ -9,6 +9,7 @@ const UserList = () => {
   const data = useLoaderData();
   const [users, setUsers] = useState(data);
   const { deleteFromFirebase, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleDeleteUser = (email) => {
     if (user != null && email === user.email) {
@@ -48,6 +49,26 @@ const UserList = () => {
         timer: 2000,
         showConfirmButton: false,
       });
+    }
+  };
+
+  /////////////////////////
+
+  const handleUserUpdate = (email) => {
+    if (!user) {
+      alert("You must need to login");
+    }
+
+    if (email != user.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You only can edit Your Profile",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } else {
+      navigate(`/update/${email}`);
     }
   };
   return (
@@ -101,7 +122,9 @@ const UserList = () => {
                   <td>{user.salary}$</td>
                   <th>
                     <div className="flex gap-2">
-                      <button className="btn border-none hover:bg-slate-200 rounded-md">
+                      <button
+                        onClick={() => handleUserUpdate(user.email)}
+                        className="btn border-none hover:bg-slate-200 rounded-md">
                         {" "}
                         <FaEdit color="purple" size={16} />
                       </button>

@@ -68,9 +68,6 @@ const Header = () => {
             <li className="bg-amber-500">{user ? user.email : null}</li>
           </ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
-        </div>
       </div>
     </div>
   );
