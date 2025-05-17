@@ -1,6 +1,10 @@
 import React, { useContext } from "react";
+import { Link } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
+
   return (
     <div>
       <div className="navbar bg-base-100 ">
@@ -25,26 +29,30 @@ const Header = () => {
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-              <li>
-                <a>Add User</a>
-              </li>
+              <Link to={"/add-user"}>
+                <li>Add User</li>
+              </Link>
 
-              <li>
-                <a>Item 3</a>
-              </li>
+              <Link to={"/login"}>
+                <li>Login</li>
+              </Link>
             </ul>
           </div>
-          <a className="font-semibold text-xl">User Management</a>
+          <Link to={"/"} className="font-semibold text-xl">
+            User Management
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <a>Add User</a>
-            </li>
+          <ul className="menu menu-horizontal px-1 space-x-3">
+            <Link to={"/add-user"}>
+              <li>Add User</li>
+            </Link>
 
-            <li>
-              <a>Item 3</a>
-            </li>
+            <Link to={"/login"}>
+              <li>Login</li>
+            </Link>
+
+            <li className="bg-amber-500">{user ? user.email : null}</li>
           </ul>
         </div>
         <div className="navbar-end">

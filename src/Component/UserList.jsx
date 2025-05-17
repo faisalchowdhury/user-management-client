@@ -1,11 +1,55 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Link, useLoaderData } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import Swal from "sweetalert2";
 
 const UserList = () => {
   const data = useLoaderData();
-  console.log(data);
+  const [users, setUsers] = useState(data);
+  const { deleteFromFirebase, user } = useContext(AuthContext);
+
+  const handleDeleteUser = (email) => {
+    if (email === user.email) {
+      Swal.fire({
+        title: "Are you sure you want to delete ?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        denyButtonText: `Don't Delete`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          deleteFromFirebase(email)
+            ?.then(() => {
+              alert("user deleted");
+
+              fetch(`http://localhost:3000/delete-user/${user.email}`, {
+                method: "DELETE",
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  const newUsers = users.filter((user) => user.email != email);
+                  setUsers(newUsers);
+
+                  console.log(data);
+                });
+            })
+            ?.catch((err) => console.log(err));
+          Swal.fire("Deleted!");
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You cant Delete Others profile",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
+  };
   return (
     <div>
       <div className="overflow-x-auto my-10">
@@ -29,7 +73,7 @@ const UserList = () => {
           </thead>
           <tbody>
             {/* row  */}
-            {data.map((user, id) => {
+            {users.map((user, id) => {
               return (
                 <tr key={user._id}>
                   <th>{id + 1}</th>
@@ -57,7 +101,9 @@ const UserList = () => {
                         {" "}
                         <FaEdit color="purple" size={16} />
                       </button>
-                      <button className="btn border-none hover:bg-slate-200 rounded-md">
+                      <button
+                        onClick={() => handleDeleteUser(user.email)}
+                        className="btn border-none hover:bg-slate-200 rounded-md">
                         <MdDelete color="red" size={16} />
                       </button>
                     </div>
