@@ -11,7 +11,24 @@ const Login = () => {
     const { email, password } = Object.fromEntries(formData.entries());
     console.log(email, password);
 
-    userLogin(email, password);
+    userLogin(email, password).then((res) => {
+      console.log(res);
+      const lastLoginTime = res.user.metadata.lastSignInTime;
+
+      const loginUserInfo = {
+        email,
+        lastLoginTime,
+      };
+      fetch(`http://localhost:3000/login`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(loginUserInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    });
   };
   return (
     <div>

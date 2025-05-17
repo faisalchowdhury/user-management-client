@@ -11,7 +11,7 @@ const UserList = () => {
   const { deleteFromFirebase, user } = useContext(AuthContext);
 
   const handleDeleteUser = (email) => {
-    if (email === user.email) {
+    if (user != null && email === user.email) {
       Swal.fire({
         title: "Are you sure you want to delete ?",
         showDenyButton: true,
@@ -66,6 +66,7 @@ const UserList = () => {
             <tr>
               <th>Serial No</th>
               <th>Name</th>
+              <th>Email</th>
               <th>Job</th>
               <th>Salary</th>
               <th>Action</th>
@@ -89,10 +90,13 @@ const UserList = () => {
                       </div>
                       <div>
                         <div className="font-bold">{user.name}</div>
-                        <div className="text-sm opacity-50">{user.email}</div>
+                        <div className="text-sm opacity-50">
+                          Last Login : {user.lastLoginTime}
+                        </div>
                       </div>
                     </div>
                   </td>
+                  <td>{user.email}</td>
                   <td>{user.occupation}</td>
                   <td>{user.salary}$</td>
                   <th>

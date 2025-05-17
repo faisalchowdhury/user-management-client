@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../Firebase/firebase";
 
 const Header = () => {
   const { user } = useContext(AuthContext);
-
+  const navigate = useNavigate();
+  const logoutUser = () => {
+    signOut(auth).then(() => navigate("/login"));
+  };
   return (
     <div>
       <div className="navbar bg-base-100 ">
@@ -33,9 +38,13 @@ const Header = () => {
                 <li>Add User</li>
               </Link>
 
-              <Link to={"/login"}>
-                <li>Login</li>
-              </Link>
+              {user ? (
+                <button>Logout</button>
+              ) : (
+                <Link to={"/login"}>
+                  <li>Login</li>
+                </Link>
+              )}
             </ul>
           </div>
           <Link to={"/"} className="font-semibold text-xl">
@@ -48,9 +57,13 @@ const Header = () => {
               <li>Add User</li>
             </Link>
 
-            <Link to={"/login"}>
-              <li>Login</li>
-            </Link>
+            {user ? (
+              <button onClick={logoutUser}>Logout</button>
+            ) : (
+              <Link to={"/login"}>
+                <li>Login</li>
+              </Link>
+            )}
 
             <li className="bg-amber-500">{user ? user.email : null}</li>
           </ul>
